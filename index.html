@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尋找您的專屬頭皮護理方式 | MUJI</title>
+    <style>
+        :root {
+            --muji-red: #7f0019;
+            --muji-gray: #333333;
+            --muji-light-gray: #f6f6f6;
+            --muji-border: #e0e0e0;
+            --bg-color: #ffffff;
+        }
+
+        body {
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--muji-gray);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        #quiz-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .step { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .step.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 8px; letter-spacing: 1px; }
+        p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; }
+
+        /* 圖片佔位符樣式 */
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 0.8rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 12px;
+            background: white;
+            border: 1px solid var(--muji-border);
+            border-radius: 2px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
+
+        /* 結果頁樣式 */
+        .result-card {
+            background-color: var(--muji-light-gray);
+            padding: 25px;
+            border-radius: 4px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .result-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
+        .result-item:last-child { border-bottom: none; }
+        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
+        .product-name { font-size: 1rem; font-weight: 500; display: block; }
+        
+        .restart-btn {
+            margin-top: 30px;
+            background: none;
+            border: none;
+            text-decoration: underline;
+            color: #999;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div id="step-0" class="step active">
+        <div class="img-placeholder">
+            <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000?v=1" alt="系列形象照">
+        </div>
+        <h1>尋找您的專屬頭皮護理方式</h1>
+        <p class="description">透過簡易檢測，挑選合適的植物發酵養分與工具，找回頭皮的平穩狀態。</p>
+        <button class="option-btn" style="justify-content: center; background: var(--muji-gray); color: white;" onclick="nextStep(1)">開始檢測</button>
+    </div>
+
+    <div id="step-1" class="step">
+        <span style="font-size: 0.7rem; color: #bbb;">01 / 03</span>
+        <h1>基礎養護需求</h1>
+        <p class="description">關於每天的洗髮時光，您更想改善的是？</p>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)">深層淨化：改善悶厚與油脂囤積</button>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)">滋潤修護：改善髮絲乾澀與毛躁</button>
+        <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)">全方位平衡：追求潔淨與水潤健康</button>
+    </div>
+
+    <div id="step-2" class="step">
+        <span style="font-size: 0.7rem; color: #bbb;">02 / 03</span>
+        <h1>加強按摩體感</h1>
+        <p class="description">您偏好哪種按壓觸感來幫助吸收？</p>
+        <button class="option-btn" onclick="record(2, '聚丙烯洗髮梳'); nextStep(3)">精細清潔：深入毛孔縫隙</button>
+        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (硬)'); nextStep(3)">強力釋壓：精準的定點回饋</button>
+        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (一般)'); nextStep(3)">規律放鬆：適中且有彈性的按摩</button>
+        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (軟)'); nextStep(3)">柔和呵護：最溫柔不刺激的觸感</button>
+    </div>
+
+    <div id="step-3" class="step">
+        <span style="font-size: 0.7rem; color: #bbb;">03 / 03</span>
+        <h1>日常生活對策</h1>
+        <p class="description">洗潤之後，哪項困擾最常困擾您？</p>
+        <button class="option-btn" onclick="record(3, '頭皮護理噴霧'); showResult()">頭皮容易乾燥發癢</button>
+        <button class="option-btn" onclick="record(3, '免沖洗護髮乳/彈潤豐盈'); showResult()">髮根容易扁塌沒精神</button>
+        <button class="option-btn" onclick="record(3, '護髮精華/潤澤保濕'); showResult()">髮尾受損分岔嚴重</button>
+        <button class="option-btn" onclick="record(3, '護髮噴霧/清爽柔順'); showResult()">追求快速順滑與光澤</button>
+    </div>
+
+    <div id="step-result" class="step">
+        <h1>專屬養護提案</h1>
+        <div class="result-card">
+            <div class="result-item">
+                <span class="label">核心必備</span>
+                <span class="product-name" id="res-1"></span>
+            </div>
+            <div class="result-item">
+                <span class="label">增效工具建議</span>
+                <span class="product-name" id="res-2"></span>
+            </div>
+            <div class="result-item">
+                <span class="label">機能補強建議</span>
+                <span class="product-name" id="res-3"></span>
+            </div>
+        </div>
+        <button class="restart-btn" onclick="location.reload()">重新檢測</button>
+    </div>
+</div>
+
+<script>
+    let selections = {};
+    function nextStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-' + n).classList.add('active');
+        window.scrollTo(0,0);
+    }
+    function record(s, v) { selections[s] = v; }
+    function showResult() {
+        document.getElementById('res-1').innerText = selections[1];
+        document.getElementById('res-2').innerText = selections[2];
+        document.getElementById('res-3').innerText = selections[3];
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-result').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
