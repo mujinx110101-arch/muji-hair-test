@@ -21,7 +21,6 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            line-height: 1.6;
         }
 
         #quiz-container {
@@ -31,69 +30,73 @@
             text-align: center;
         }
 
-        .step { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .step { display: none; animation: fadeIn 0.4s ease-out; }
         .step.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 8px; letter-spacing: 1px; }
+        h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; }
         p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; }
 
-        /* 圖片佔位符樣式 */
-        .img-placeholder {
-            width: 100%;
-            height: 250px;
-            background-color: #f0f0f0;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ccc;
-            font-size: 0.8rem;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
-
         .option-btn {
-            display: flex;
-            align-items: center;
+            display: block;
             width: 100%;
-            padding: 18px;
-            margin-bottom: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
             background: white;
             border: 1px solid var(--muji-border);
             border-radius: 2px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             text-align: left;
+            line-height: 1.4;
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
 
-        /* 結果頁樣式 */
+        /* 結果頁樣式優化 */
         .result-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
             background-color: var(--muji-light-gray);
-            padding: 25px;
+            padding: 15px;
             border-radius: 4px;
             text-align: left;
-            margin-top: 20px;
         }
-        .result-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-        .result-item:last-child { border-bottom: none; }
-        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
-        .product-name { font-size: 1rem; font-weight: 500; display: block; }
+
+        .result-img {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            margin-right: 20px;
+            border-radius: 2px;
+            object-fit: contain; /* 確保商品圖不被裁切 */
+            flex-shrink: 0;
+            border: 1px solid #eee;
+        }
+
+        .result-info { flex-grow: 1; }
+        .label { display: block; font-size: 0.75rem; color: var(--muji-red); font-weight: bold; margin-bottom: 5px; }
+        .product-name { font-size: 0.95rem; font-weight: 500; color: #000; line-height: 1.4; }
         
         .restart-btn {
-            margin-top: 30px;
+            margin-top: 40px;
             background: none;
             border: none;
             text-decoration: underline;
             color: #999;
             cursor: pointer;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -101,57 +104,52 @@
 
 <div id="quiz-container">
     <div id="step-0" class="step active">
-        <div class="img-placeholder">
-            <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000?v=1" alt="系列形象照">
-        </div>
-        <h1>尋找您的專屬頭皮護理方式</h1>
-        <p class="description">透過簡易檢測，挑選合適的植物發酵養分與工具，找回頭皮的平穩狀態。</p>
-        <button class="option-btn" style="justify-content: center; background: var(--muji-gray); color: white;" onclick="nextStep(1)">開始檢測</button>
+        <h1 style="margin-top: 40px;">尋找您的專屬頭皮護理方式</h1>
+        <p class="description">頭皮的健康決定髮絲的光澤。<br>兩步驟快速測算最適合您的護理組合。</p>
+        <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="nextStep(1)">開始體驗</button>
     </div>
 
     <div id="step-1" class="step">
-        <span style="font-size: 0.7rem; color: #bbb;">01 / 03</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 01</span>
         <h1>基礎養護需求</h1>
-        <p class="description">關於每天的洗髮時光，您更想改善的是？</p>
-        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)">深層淨化：改善悶厚與油脂囤積</button>
-        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)">滋潤修護：改善髮絲乾澀與毛躁</button>
-        <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)">全方位平衡：追求潔淨與水潤健康</button>
+        <p class="description">關於每天的洗髮時光，您的頭皮狀態更傾向？</p>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)">
+            <strong>深層淨化</strong><br><small style="color:#888;">解決頭皮悶熱感，追求毛孔清爽呼吸。</small>
+        </button>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)">
+            <strong>滋潤修護</strong><br><small style="color:#888;">改善洗後乾澀，鎖住頭皮與髮絲水分。</small>
+        </button>
+        <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)">
+            <strong>全方位平衡</strong><br><small style="color:#888;">完整調理頭皮微生態，潔淨同時補水。</small>
+        </button>
     </div>
 
     <div id="step-2" class="step">
-        <span style="font-size: 0.7rem; color: #bbb;">02 / 03</span>
-        <h1>加強按摩體感</h1>
-        <p class="description">您偏好哪種按壓觸感來幫助吸收？</p>
-        <button class="option-btn" onclick="record(2, '聚丙烯洗髮梳'); nextStep(3)">精細清潔：深入毛孔縫隙</button>
-        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (硬)'); nextStep(3)">強力釋壓：精準的定點回饋</button>
-        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (一般)'); nextStep(3)">規律放鬆：適中且有彈性的按摩</button>
-        <button class="option-btn" onclick="record(2, '聚丙烯頭皮按摩梳 (軟)'); nextStep(3)">柔和呵護：最溫柔不刺激的觸感</button>
-    </div>
-
-    <div id="step-3" class="step">
-        <span style="font-size: 0.7rem; color: #bbb;">03 / 03</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 02</span>
         <h1>日常生活對策</h1>
-        <p class="description">洗潤之後，哪項困擾最常困擾您？</p>
-        <button class="option-btn" onclick="record(3, '頭皮護理噴霧'); showResult()">頭皮容易乾燥發癢</button>
-        <button class="option-btn" onclick="record(3, '免沖洗護髮乳/彈潤豐盈'); showResult()">髮根容易扁塌沒精神</button>
-        <button class="option-btn" onclick="record(3, '護髮精華/潤澤保濕'); showResult()">髮尾受損分岔嚴重</button>
-        <button class="option-btn" onclick="record(3, '護髮噴霧/清爽柔順'); showResult()">追求快速順滑與光澤</button>
+        <p class="description">洗髮之後，哪項髮質或細節困擾最常困擾您？</p>
+        <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()">頭皮容易乾燥、有癢感</button>
+        <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()">髮根細軟扁塌，追求蓬鬆感</button>
+        <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()">髮尾受損分岔嚴重</button>
+        <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()">追求快速順滑，改善糾結</button>
     </div>
 
     <div id="step-result" class="step">
-        <h1>專屬養護提案</h1>
+        <h1>您的專屬護理組合</h1>
         <div class="result-card">
             <div class="result-item">
-                <span class="label">核心必備</span>
-                <span class="product-name" id="res-1"></span>
+                <img id="img-res-1" class="result-img" src="" alt="商品圖">
+                <div class="result-info">
+                    <span class="label">核心基礎保養</span>
+                    <span class="product-name" id="res-1"></span>
+                </div>
             </div>
             <div class="result-item">
-                <span class="label">增效工具建議</span>
-                <span class="product-name" id="res-2"></span>
-            </div>
-            <div class="result-item">
-                <span class="label">機能補強建議</span>
-                <span class="product-name" id="res-3"></span>
+                <img id="img-res-2" class="result-img" src="" alt="商品圖">
+                <div class="result-info">
+                    <span class="label">機能進階對策</span>
+                    <span class="product-name" id="res-2"></span>
+                </div>
             </div>
         </div>
         <button class="restart-btn" onclick="location.reload()">重新檢測</button>
@@ -159,6 +157,16 @@
 </div>
 
 <script>
+    const itemImages = {
+        '植物發酵液頭皮護理洗髮精': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/0/639087467223230000?v=1',
+        '植物發酵液頭皮護理潤絲精': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11567045/0/639087466910230000?v=1',
+        '植物發酵液 洗 + 潤組合': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000?v=1',
+        '頭皮護理噴霧': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069581/0/638981331186530000?v=1',
+        '免沖洗護髮乳/彈潤豐盈': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069579/0/639041876306400000?v=1',
+        '護髮精華/潤澤保濕': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069578/0/638980194893430000?v=1',
+        '護髮噴霧/清爽柔順': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069580/0/638980194892830000?v=1'
+    };
+
     let selections = {};
     function nextStep(n) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -169,7 +177,9 @@
     function showResult() {
         document.getElementById('res-1').innerText = selections[1];
         document.getElementById('res-2').innerText = selections[2];
-        document.getElementById('res-3').innerText = selections[3];
+        document.getElementById('img-res-1').src = itemImages[selections[1]];
+        document.getElementById('img-res-2').src = itemImages[selections[2]];
+        
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         document.getElementById('step-result').classList.add('active');
     }
