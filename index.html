@@ -38,8 +38,18 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 首頁形象圖樣式 */
+        .hero-img {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: contain;
+            margin-bottom: 25px;
+            background-color: #fff;
+        }
+
         h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; }
-        p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; }
+        p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
 
         .option-btn {
             display: block;
@@ -57,7 +67,6 @@
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
 
-        /* 結果頁樣式優化 */
         .result-card {
             display: flex;
             flex-direction: column;
@@ -80,7 +89,7 @@
             background-color: #fff;
             margin-right: 20px;
             border-radius: 2px;
-            object-fit: contain; /* 確保商品圖不被裁切 */
+            object-fit: contain;
             flex-shrink: 0;
             border: 1px solid #eee;
         }
@@ -104,7 +113,8 @@
 
 <div id="quiz-container">
     <div id="step-0" class="step active">
-        <h1 style="margin-top: 40px;">尋找您的專屬頭皮護理方式</h1>
+        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img" alt="植物發酵液系列">
+        <h1>尋找您的專屬頭皮護理方式</h1>
         <p class="description">頭皮的健康決定髮絲的光澤。<br>兩步驟快速測算最適合您的護理組合。</p>
         <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="nextStep(1)">開始體驗</button>
     </div>
