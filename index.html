@@ -28,7 +28,11 @@
             max-width: 450px;
             padding: 40px 20px;
             text-align: center;
+            position: relative;
         }
+
+        /* 隱藏 YouTube 播放器 */
+        #yt-player { position: absolute; width: 0; height: 0; pointer-events: none; opacity: 0; }
 
         .step { display: none; animation: fadeIn 0.4s ease-out; }
         .step.active { display: block; }
@@ -38,84 +42,42 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-img {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: contain;
-            margin-bottom: 25px;
-        }
-
+        .hero-img { width: 100%; height: auto; max-height: 250px; object-fit: contain; margin-bottom: 25px; }
         h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 15px; letter-spacing: 1px; }
         p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.7; }
 
         .option-btn {
-            display: block;
-            width: 100%;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-            background: white;
-            border: 1px solid var(--muji-border);
-            border-radius: 2px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-            line-height: 1.5;
+            display: block; width: 100%; padding: 18px 20px; margin-bottom: 12px;
+            background: white; border: 1px solid var(--muji-border); border-radius: 2px;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.2s; text-align: left;
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
         .option-btn strong { display: block; font-size: 1rem; color: #000; margin-bottom: 4px; }
 
         .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            background: none;
-            border: none;
-            color: #999;
-            text-decoration: underline;
-            font-size: 0.85rem;
-            cursor: pointer;
+            display: inline-block; margin-top: 20px; background: none; border: none;
+            color: #999; text-decoration: underline; font-size: 0.85rem; cursor: pointer;
         }
 
         .result-card { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
         .result-item {
-            display: flex;
-            align-items: center;
-            background-color: var(--muji-light-gray);
-            padding: 15px;
-            border-radius: 4px;
-            text-align: left;
+            display: flex; align-items: center; background-color: var(--muji-light-gray);
+            padding: 15px; border-radius: 4px; text-align: left;
         }
-        .result-img {
-            width: 95px;
-            height: 95px;
-            background-color: #fff;
-            margin-right: 15px;
-            border-radius: 2px;
-            object-fit: contain;
-            flex-shrink: 0;
-            border: 1px solid #eee;
-        }
-        .result-info { flex-grow: 1; }
-        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
+        .result-img { width: 95px; height: 95px; background-color: #fff; margin-right: 15px; border-radius: 2px; object-fit: contain; flex-shrink: 0; border: 1px solid #eee; }
         .product-name { font-size: 0.95rem; font-weight: 500; color: #000; line-height: 1.4; }
+        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
         
-        .restart-btn {
-            margin-top: 40px;
-            background: none;
-            border: none;
-            text-decoration: underline;
-            color: #999;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
+        .restart-btn { margin-top: 40px; background: none; border: none; text-decoration: underline; color: #999; cursor: pointer; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
+<div id="yt-player"></div>
+
 <div id="quiz-container">
     <div id="step-0" class="step active">
-        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img" alt="26SS系列形象圖">
+        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img">
         <h1>尋找您的專屬頭皮護理方式</h1>
         <p class="description">
             源自肌膚保養概念，特別添加<br>
@@ -123,22 +85,16 @@
             賦予頭皮潤澤，深層修補受損。<br>
             只需三步驟，發現您的完美養護對策。
         </p>
-        <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="nextStep(1)">開始檢測</button>
+        <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="startQuiz()">開始檢測</button>
     </div>
 
     <div id="step-1" class="step">
         <span style="font-size: 0.8rem; color: #bbb;">STEP 01 / 03</span>
         <h1>基礎養護需求</h1>
         <p class="description">透過發酵潤澤成分，幫助頭皮回歸健康狀態：</p>
-        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)">
-            <strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔呼吸的暢快。
-        </button>
-        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)">
-            <strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，並鎖住髮絲水分。
-        </button>
-        <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)">
-            <strong>全方位機能平衡</strong>三大發酵精華完整導入，達成頭皮微生態平衡。
-        </button>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)"><strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔呼吸的暢快。</button>
+        <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)"><strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，並鎖住髮絲水分。</button>
+        <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)"><strong>全方位機能平衡</strong>三大發酵精華完整導入，達成頭皮微生態平衡。</button>
         <button class="back-btn" onclick="nextStep(0)">返回首頁</button>
     </div>
 
@@ -156,21 +112,11 @@
         <span style="font-size: 0.8rem; color: #bbb;">STEP 03 / 03</span>
         <h1>髮質特徵確認</h1>
         <p class="description">請根據目前的秀髮狀態選擇最符合的描述：</p>
-        <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()">
-            <strong>髮質乾燥、染燙後毛躁</strong>觸感乾澀缺乏光澤，希望能恢復柔順感。
-        </button>
-        <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()">
-            <strong>自然捲、毛躁粗硬髮質</strong>髮絲容易亂翹或難以整理，追求輕盈服貼度。
-        </button>
-        <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()">
-            <strong>受乾燥與靜電困擾的細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。
-        </button>
-        <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()">
-            <strong>容易扁塌、在意頭皮氣味</strong>頭皮容易油水不平衡，希望能維持清爽環境。
-        </button>
-        <button class="option-btn" onclick="record(2, '深層修復髮膜'); showResult()">
-            <strong>極度受損、髮尾嚴重打結</strong>經過頻繁化學處理，髮尾極度乾燥且容易斷裂。
-        </button>
+        <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()"><strong>髮質乾燥、染燙後毛躁</strong>觸感乾澀缺乏光澤，希望能恢復柔順感。</button>
+        <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()"><strong>自然捲、毛躁粗硬髮質</strong>髮絲容易亂翹或難以整理，追求輕盈服貼度。</button>
+        <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()"><strong>受乾燥與靜電困擾的細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。</button>
+        <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()"><strong>容易扁塌、在意頭皮氣味</strong>頭皮容易油水不平衡，希望能維持清爽環境。</button>
+        <button class="option-btn" onclick="record(2, '深層修復髮膜'); showResult()"><strong>極度受損、髮尾嚴重打結</strong>經過頻繁化學處理，髮尾極度乾燥且容易斷裂。</button>
         <button class="back-btn" onclick="nextStep(2)">返回上一題</button>
     </div>
 
@@ -178,29 +124,46 @@
         <h1>您的專屬護理組合</h1>
         <div class="result-card">
             <div class="result-item">
-                <img id="img-res-1" class="result-img" src="" alt="商品圖">
+                <img id="img-res-1" class="result-img" src="">
                 <div class="result-info">
                     <span class="label">Step 1. 核心基礎保養</span>
                     <span class="product-name" id="res-1"></span>
                 </div>
             </div>
             <div class="result-item">
-                <img id="img-res-2" class="result-img" src="" alt="商品圖">
+                <img id="img-res-2" class="result-img" src="">
                 <div class="result-info">
                     <span class="label">Step 2. 機能進階對策</span>
                     <span class="product-name" id="res-2"></span>
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.85rem; color: #666; margin-top: 25px;">
-            透過米糠、薏仁、大麥發酵過程產生的潤澤成分，<br>
-            為您的頭皮與頭髮補充水分並修補受損。
-        </p>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 25px;">透過發酵潤澤成分，為您的頭皮與頭髮補充水分並修補受損。</p>
         <button class="restart-btn" onclick="location.reload()">重新檢測</button>
     </div>
 </div>
 
 <script>
+    // 載入 YouTube API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('yt-player', {
+            height: '0', width: '0',
+            videoId: 'J6IVI1NRl6E',
+            playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'J6IVI1NRl6E' }
+        });
+    }
+
+    function startQuiz() {
+        if (player && player.playVideo) { player.playVideo(); }
+        nextStep(1);
+    }
+
     const itemImages = {
         '植物發酵液頭皮護理洗髮精': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/0/639087467223230000?v=1',
         '植物發酵液頭皮護理潤絲精': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11567045/0/639087466910230000?v=1',
@@ -224,11 +187,9 @@
         document.getElementById('res-2').innerText = selections[2];
         document.getElementById('img-res-1').src = itemImages[selections[1]];
         document.getElementById('img-res-2').src = itemImages[selections[2]];
-        
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         document.getElementById('step-result').classList.add('active');
     }
 </script>
-
 </body>
 </html>
