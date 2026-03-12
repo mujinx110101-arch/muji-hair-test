@@ -82,8 +82,8 @@
         <p class="description">
             源自肌膚保養概念，特別添加<br>
             <strong>米糠、薏仁、大麥</strong> 三大發酵液成分。<br>
-            透過發酵過程產生的潤澤成分，<br>
-            給予頭皮與頭髮水分，同時修補受損部位。
+            賦予頭皮潤澤，深層修補受損。<br>
+            只需三步驟，發現您的完美養護對策。
         </p>
         <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="startQuiz()">開始檢測</button>
     </div>
@@ -138,12 +138,13 @@
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.85rem; color: #666; margin-top: 25px;">透過米糠、薏仁、大麥發酵產生的潤澤成分，<br>為您的頭皮與頭髮補充水分並修補受損。</p>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 25px;">透過發酵產生的潤澤成分，為您的頭皮與頭髮補充水分並修補受損。</p>
         <button class="restart-btn" onclick="resetQuiz()">重新檢測</button>
     </div>
 </div>
 
 <script>
+    // 載入 YouTube API
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -153,20 +154,21 @@
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('yt-player', {
             height: '0', width: '0',
-            videoId: 'X_abHrGp--o', // Morning Routine 音樂
+            videoId: '2Lr11mJWrsE', // 更新音樂 ID 為 BGM 24
             playerVars: { 
-                'autoplay': 0, 'loop': 1, 'playlist': 'X_abHrGp--o',
+                'autoplay': 0, 'loop': 1, 'playlist': '2Lr11mJWrsE',
                 'controls': 0, 'showinfo': 0, 'modestbranding': 1
             }
         });
     }
 
+    // 啟動檢測時開啟音樂
     function startQuiz() {
         if (player && player.playVideo) { player.playVideo(); }
         nextStep(1);
     }
 
-    // ⭐ 重置邏輯：清空數據並回首頁，不重整頁面，音樂持續播放
+    // 重置功能：不重載網頁，確保音樂持續播放
     function resetQuiz() {
         selections = {};
         nextStep(0);
