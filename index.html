@@ -38,42 +38,46 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 首頁形象圖樣式 */
         .hero-img {
             width: 100%;
             height: auto;
             max-height: 250px;
             object-fit: contain;
             margin-bottom: 25px;
-            background-color: #fff;
         }
 
-        h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; }
-        p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: 15px; letter-spacing: 1px; }
+        p.description { font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.7; }
 
         .option-btn {
             display: block;
             width: 100%;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
             background: white;
             border: 1px solid var(--muji-border);
             border-radius: 2px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: left;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
+        .option-btn strong { display: block; font-size: 1rem; color: #000; margin-bottom: 4px; }
 
-        .result-card {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 25px;
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background: none;
+            border: none;
+            color: #999;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
 
+        .result-card { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
         .result-item {
             display: flex;
             align-items: center;
@@ -82,20 +86,18 @@
             border-radius: 4px;
             text-align: left;
         }
-
         .result-img {
-            width: 100px;
-            height: 100px;
+            width: 95px;
+            height: 95px;
             background-color: #fff;
-            margin-right: 20px;
+            margin-right: 15px;
             border-radius: 2px;
             object-fit: contain;
             flex-shrink: 0;
             border: 1px solid #eee;
         }
-
         .result-info { flex-grow: 1; }
-        .label { display: block; font-size: 0.75rem; color: var(--muji-red); font-weight: bold; margin-bottom: 5px; }
+        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
         .product-name { font-size: 0.95rem; font-weight: 500; color: #000; line-height: 1.4; }
         
         .restart-btn {
@@ -113,35 +115,63 @@
 
 <div id="quiz-container">
     <div id="step-0" class="step active">
-        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img" alt="植物發酵液系列">
+        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img" alt="26SS系列形象圖">
         <h1>尋找您的專屬頭皮護理方式</h1>
-        <p class="description">頭皮的健康決定髮絲的光澤。<br>兩步驟快速測算最適合您的護理組合。</p>
-        <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="nextStep(1)">開始體驗</button>
+        <p class="description">
+            源自肌膚保養概念，特別添加<br>
+            <strong>米糠、薏仁、大麥</strong> 三大發酵液成分。<br>
+            賦予頭皮潤澤，深層修補受損。<br>
+            只需三步驟，發現您的完美養護對策。
+        </p>
+        <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="nextStep(1)">開始檢測</button>
     </div>
 
     <div id="step-1" class="step">
-        <span style="font-size: 0.8rem; color: #bbb;">STEP 01</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 01 / 03</span>
         <h1>基礎養護需求</h1>
-        <p class="description">關於每天的洗髮時光，您的頭皮狀態更傾向？</p>
+        <p class="description">透過發酵潤澤成分，幫助頭皮回歸健康狀態：</p>
         <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)">
-            <strong>深層淨化</strong><br><small style="color:#888;">解決頭皮悶熱感，追求毛孔清爽呼吸。</small>
+            <strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔呼吸的暢快。
         </button>
         <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)">
-            <strong>滋潤修護</strong><br><small style="color:#888;">改善洗後乾澀，鎖住頭皮與髮絲水分。</small>
+            <strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，並鎖住髮絲水分。
         </button>
         <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)">
-            <strong>全方位平衡</strong><br><small style="color:#888;">完整調理頭皮微生態，潔淨同時補水。</small>
+            <strong>全方位機能平衡</strong>三大發酵精華完整導入，達成頭皮微生態平衡。
         </button>
+        <button class="back-btn" onclick="nextStep(0)">返回首頁</button>
     </div>
 
     <div id="step-2" class="step">
-        <span style="font-size: 0.8rem; color: #bbb;">STEP 02</span>
-        <h1>日常生活對策</h1>
-        <p class="description">洗髮之後，哪項髮質或細節困擾最常困擾您？</p>
-        <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()">頭皮容易乾燥、有癢感</button>
-        <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()">髮根細軟扁塌，追求蓬鬆感</button>
-        <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()">髮尾受損分岔嚴重</button>
-        <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()">追求快速順滑，改善糾結</button>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 02 / 03</span>
+        <h1>生活環境觀察</h1>
+        <p class="description">針對台灣常見的日常場景，您更有感的是？</p>
+        <button class="option-btn" onclick="nextStep(3)"><strong>空調房與環境變化</strong>待在冷氣房久了，感覺頭皮乾燥緊繃或缺水。</button>
+        <button class="option-btn" onclick="nextStep(3)"><strong>悶熱與外部壓力</strong>長時間配戴安全帽，容易有氣味或出油悶熱感。</button>
+        <button class="option-btn" onclick="nextStep(3)"><strong>頻繁造型修整</strong>受染燙吹風傷害，髮尾顯得乾澀、受損或分岔。</button>
+        <button class="back-btn" onclick="nextStep(1)">返回上一題</button>
+    </div>
+
+    <div id="step-3" class="step">
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 03 / 03</span>
+        <h1>髮質特徵確認</h1>
+        <p class="description">請根據目前的秀髮狀態選擇最符合的描述：</p>
+        <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()">
+            <strong>髮質乾燥、染燙後毛躁</strong>觸感乾澀缺乏光澤，希望能恢復柔順感。
+        </button>
+        <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()">
+            <strong>自然捲、毛躁粗硬髮質</strong>髮絲容易亂翹或難以整理，追求輕盈服貼度。
+        </button>
+        <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()">
+            <strong>受乾燥與靜電困擾的細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。
+        </button>
+        <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()">
+            <strong>容易扁塌、在意頭皮氣味</strong>頭皮容易油水不平衡，希望能維持清爽環境。
+        </button>
+        <button class="option-btn" onclick="record(2, '深層修復髮膜'); showResult()">
+            <strong>極度受損、髮尾嚴重打結</strong>經過頻繁化學處理，髮尾極度乾燥且容易斷裂。
+        </button>
+        <button class="back-btn" onclick="nextStep(2)">返回上一題</button>
     </div>
 
     <div id="step-result" class="step">
@@ -150,18 +180,22 @@
             <div class="result-item">
                 <img id="img-res-1" class="result-img" src="" alt="商品圖">
                 <div class="result-info">
-                    <span class="label">核心基礎保養</span>
+                    <span class="label">Step 1. 核心基礎保養</span>
                     <span class="product-name" id="res-1"></span>
                 </div>
             </div>
             <div class="result-item">
                 <img id="img-res-2" class="result-img" src="" alt="商品圖">
                 <div class="result-info">
-                    <span class="label">機能進階對策</span>
+                    <span class="label">Step 2. 機能進階對策</span>
                     <span class="product-name" id="res-2"></span>
                 </div>
             </div>
         </div>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 25px;">
+            透過米糠、薏仁、大麥發酵過程產生的潤澤成分，<br>
+            為您的頭皮與頭髮補充水分並修補受損。
+        </p>
         <button class="restart-btn" onclick="location.reload()">重新檢測</button>
     </div>
 </div>
@@ -174,7 +208,8 @@
         '頭皮護理噴霧': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069581/0/638981331186530000?v=1',
         '免沖洗護髮乳/彈潤豐盈': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069579/0/639041876306400000?v=1',
         '護髮精華/潤澤保濕': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069578/0/638980194893430000?v=1',
-        '護髮噴霧/清爽柔順': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069580/0/638980194892830000?v=1'
+        '護髮噴霧/清爽柔順': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069580/0/638980194892830000?v=1',
+        '深層修復髮膜': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069582/0/639089203133070000?v=1'
     };
 
     let selections = {};
