@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>尋找您的專屬頭皮護理方式 | MUJI</title>
     <style>
         :root {
@@ -13,22 +13,33 @@
             --bg-color: #F2F1ED;
         }
 
+        /* 🔒 核心：禁止捲動 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 禁止全網頁捲動 */
+            background-color: var(--bg-color);
+        }
+
         body {
             font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg-color);
             color: var(--muji-gray);
-            margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            align-items: center; /* 內容垂直置中 */
         }
 
         #quiz-container {
             width: 90%;
             max-width: 850px;
+            height: 100vh; /* 鎖定容器高度為視窗高度 */
             padding: 20px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 確保內容在畫面正中央 */
+            box-sizing: border-box;
             position: relative;
         }
 
@@ -39,26 +50,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .hero-img {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             height: auto;
-            max-height: 35vh;
+            max-height: 30vh; /* 限制高度，確保下方按鈕不溢出 */
             object-fit: cover;
             border-radius: 2px;
         }
 
         .text-section {
-            flex: 1;
+            flex: 0; /* 不要過度擴張 */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            align-items: center;
         }
 
-        .step { display: none; animation: fadeIn 0.4s ease-out; }
+        .step { display: none; animation: fadeIn 0.4s ease-out; width: 100%; }
         .step.active { display: block; }
 
         @keyframes fadeIn {
@@ -66,67 +77,62 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { font-size: 1.4rem; font-weight: 500; margin: 10px 0; letter-spacing: 1px; }
-        p.description { font-size: 0.95rem; color: #666; margin-bottom: 25px; line-height: 1.6; }
+        h1 { font-size: 1.3rem; font-weight: 500; margin: 5px 0 10px 0; letter-spacing: 1px; }
+        p.description { font-size: 0.9rem; color: #666; margin-bottom: 20px; line-height: 1.5; }
 
         /* --- 按鈕容器 --- */
         .options-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
-            margin: 15px 0;
+            gap: 10px;
+            margin: 10px 0;
+            max-height: 60vh; /* 限制選項區域高度 */
         }
 
         .option-btn {
             display: flex;
             flex-direction: column;
-            padding: 16px 20px;
+            padding: 12px 18px; /* 縮小內距以節省高度 */
             background: white;
             border: 1px solid var(--muji-border);
             border-radius: 2px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: left;
             color: var(--muji-gray);
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
-        .option-btn strong { display: block; font-size: 1rem; color: #000; margin-bottom: 4px; }
+        .option-btn strong { display: block; font-size: 0.95rem; color: #000; margin-bottom: 2px; }
 
-        /* --- 返回按鈕樣式 --- */
         .back-btn {
             display: inline-block;
-            margin-top: 15px;
             background: none;
             border: none;
             color: #999;
             text-decoration: underline;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             padding: 10px;
         }
 
         /* --- 結果頁 --- */
-        .result-card { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .result-card { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .result-item {
             display: flex; align-items: center; background-color: rgba(255,255,255,0.6);
-            padding: 15px; border-radius: 4px; text-align: left; flex: 1;
+            padding: 12px; border-radius: 4px; text-align: left; flex: 1;
         }
-        .result-img { width: 80px; height: 80px; background-color: #fff; margin-right: 15px; object-fit: contain; flex-shrink: 0; border: 1px solid #eee; }
-        .product-name { font-size: 0.95rem; font-weight: 500; color: #000; }
-        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
+        .result-img { width: 70px; height: 70px; background-color: #fff; margin-right: 12px; object-fit: contain; flex-shrink: 0; }
+        .product-name { font-size: 0.9rem; font-weight: 500; color: #000; }
+        .label { display: block; font-size: 0.65rem; color: var(--muji-red); font-weight: bold; margin-bottom: 2px; }
 
-        /* --- ⭐ iPad 橫向模式特殊優化 --- */
+        /* --- ⭐ iPad 橫向模式優化 (確保 100% 不溢出) --- */
         @media (min-width: 768px) and (orientation: landscape) {
-            #quiz-container { max-width: 900px; padding: 10px; }
-            .intro-content { flex-direction: row; text-align: left; gap: 40px; }
-            .hero-img { max-width: 45%; max-height: 55vh; }
+            .intro-content { flex-direction: row; text-align: left; gap: 30px; }
+            .hero-img { max-width: 40%; max-height: 50vh; }
             .options-container { grid-template-columns: 1fr 1fr; }
             .result-card { flex-direction: row; }
-        }
-
-        @media (min-width: 1024px) {
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -145,27 +151,27 @@
                     賦予頭皮潤澤，深層修補受損。<br>
                     只需三步驟，發現您的完美養護對策。
                 </p>
-                <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="startQuiz()">開始檢測</button>
+                <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white; width: 200px; align-self: center;" onclick="startQuiz()">開始檢測</button>
             </div>
         </div>
     </div>
 
     <div id="step-1" class="step">
-        <span style="font-size: 0.8rem; color: #bbb;">STEP 01 / 03</span>
+        <span style="font-size: 0.75rem; color: #bbb;">STEP 01 / 03</span>
         <h1>基礎養護需求</h1>
         <div class="options-container">
-            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)"><strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔呼吸的暢快。</button>
-            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)"><strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，鎖住髮絲水分。</button>
-            <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)"><strong>全方位平衡</strong>三大發酵精華導入，達成頭皮微生態平衡。</button>
+            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)"><strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔暢快。</button>
+            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)"><strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，鎖住水分。</button>
+            <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)"><strong>全方位平衡</strong>三大發酵精華導入，達成微生態平衡。</button>
         </div>
         <button class="back-btn" onclick="nextStep(0)">返回首頁</button>
     </div>
 
     <div id="step-2" class="step">
-        <span style="font-size: 0.8rem; color: #bbb;">STEP 02 / 03</span>
+        <span style="font-size: 0.75rem; color: #bbb;">STEP 02 / 03</span>
         <h1>生活環境觀察</h1>
         <div class="options-container">
-            <button class="option-btn" onclick="nextStep(3)"><strong>空調房與環境變化</strong>待在冷氣房久了，感覺頭皮乾燥緊繃。</button>
+            <button class="option-btn" onclick="nextStep(3)"><strong>空調房環境變化</strong>待在冷氣房久了，感覺頭皮乾燥緊繃。</button>
             <button class="option-btn" onclick="nextStep(3)"><strong>悶熱與壓力</strong>長時間配戴安全帽，容易有氣味或出油感。</button>
             <button class="option-btn" onclick="nextStep(3)"><strong>頻繁造型修整</strong>受染燙吹風傷害，髮尾顯得乾澀或分岔。</button>
         </div>
@@ -173,13 +179,13 @@
     </div>
 
     <div id="step-3" class="step">
-        <span style="font-size: 0.8rem; color: #bbb;">STEP 03 / 03</span>
+        <span style="font-size: 0.75rem; color: #bbb;">STEP 03 / 03</span>
         <h1>髮質特徵確認</h1>
         <div class="options-container">
-            <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()"><strong>髮質乾燥、染燙毛躁</strong>觸感乾澀缺乏光澤，恢復柔順感。</button>
-            <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()"><strong>自然捲、毛躁粗硬</strong>髮絲亂翹難整理，追求輕盈服貼度。</button>
-            <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()"><strong>糾結細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。</button>
-            <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()"><strong>容易扁塌、在意氣味</strong>頭皮油水不平衡，維持清爽環境。</button>
+            <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()"><strong>髮質乾燥毛躁</strong>觸感乾澀缺乏光澤，恢復柔順感。</button>
+            <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()"><strong>自然捲毛躁粗硬</strong>髮絲亂翹難整理，追求輕盈服貼度。</button>
+            <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()"><strong>糾結細軟髮</strong>髮絲容易糾結，想要起床後快速順滑。</button>
+            <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()"><strong>容易扁塌氣味</strong>頭皮油水不平衡，維持清爽環境。</button>
         </div>
         <button class="back-btn" onclick="nextStep(2)">返回上一題</button>
     </div>
@@ -187,10 +193,10 @@
     <div id="step-result" class="step">
         <h1>您的專屬護理組合</h1>
         <div class="result-card">
-            <div class="result-item"><img id="img-res-1" class="result-img" src=""><div class="result-info"><span class="label">Step 1. 核心基礎保養</span><span class="product-name" id="res-1"></span></div></div>
-            <div class="result-item"><img id="img-res-2" class="result-img" src=""><div class="result-info"><span class="label">Step 2. 機能進階對策</span><span class="product-name" id="res-2"></span></div></div>
+            <div class="result-item"><img id="img-res-1" class="result-img" src=""><div class="result-info"><span class="label">Step 1</span><span class="product-name" id="res-1"></span></div></div>
+            <div class="result-item"><img id="img-res-2" class="result-img" src=""><div class="result-info"><span class="label">Step 2</span><span class="product-name" id="res-2"></span></div></div>
         </div>
-        <button class="back-btn" style="margin-top: 30px; font-size: 1rem;" onclick="resetQuiz()">重新檢測</button>
+        <button class="back-btn" style="margin-top: 20px; font-size: 0.9rem;" onclick="resetQuiz()">重新檢測</button>
     </div>
 </div>
 
@@ -233,7 +239,7 @@
     function nextStep(n) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         const target = document.getElementById('step-' + n);
-        if (target) { target.classList.add('active'); window.scrollTo(0,0); }
+        if (target) { target.classList.add('active'); }
     }
     function record(s, v) { selections[s] = v; }
     function showResult() {
