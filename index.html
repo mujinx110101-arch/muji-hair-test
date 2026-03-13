@@ -20,30 +20,42 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
         }
 
         #quiz-container {
             width: 90%;
-            max-width: 800px; /* 平板與電腦上的最大寬度 */
-            padding: 40px 20px;
+            max-width: 850px;
+            padding: 20px;
             text-align: center;
             position: relative;
         }
 
         #yt-player { position: absolute; width: 0; height: 0; pointer-events: none; opacity: 0; }
 
-        /* 圖片自適應優化 */
+        /* --- 響應式佈局結構 --- */
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
         .hero-img {
             width: 100%;
+            max-width: 400px;
             height: auto;
-            max-height: 45vh;
+            max-height: 35vh;
             object-fit: cover;
-            object-position: center;
-            margin-bottom: 30px;
             border-radius: 2px;
-            display: block;
+        }
+
+        .text-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .step { display: none; animation: fadeIn 0.4s ease-out; }
@@ -54,86 +66,67 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { font-size: 1.5rem; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; line-height: 1.4; }
-        p.description { font-size: 1rem; color: #666; margin-bottom: 35px; line-height: 1.8; }
+        h1 { font-size: 1.4rem; font-weight: 500; margin: 10px 0; letter-spacing: 1px; }
+        p.description { font-size: 0.95rem; color: #666; margin-bottom: 25px; line-height: 1.6; }
 
-        /* 按鈕容器：手機單欄，平板以上雙欄 */
+        /* --- 按鈕容器 --- */
         .options-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin: 15px 0;
         }
 
         .option-btn {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            padding: 20px;
+            padding: 16px 20px;
             background: white;
             border: 1px solid var(--muji-border);
             border-radius: 2px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: left;
-            box-sizing: border-box;
             color: var(--muji-gray);
         }
         .option-btn:hover { background-color: var(--muji-light-gray); border-color: #999; }
-        .option-btn strong { display: block; font-size: 1.1rem; color: #000; margin-bottom: 6px; }
+        .option-btn strong { display: block; font-size: 1rem; color: #000; margin-bottom: 4px; }
 
+        /* --- 返回按鈕樣式 --- */
         .back-btn {
-            display: inline-block; margin-top: 25px; background: none; border: none;
-            color: #999; text-decoration: underline; font-size: 0.9rem; cursor: pointer;
+            display: inline-block;
+            margin-top: 15px;
+            background: none;
+            border: none;
+            color: #999;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 10px;
         }
 
-        /* 結果頁佈局 */
-        .result-card {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
+        /* --- 結果頁 --- */
+        .result-card { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
         .result-item {
-            display: flex;
-            align-items: center;
-            background-color: rgba(255,255,255,0.6);
-            padding: 20px;
-            border-radius: 4px;
-            text-align: left;
-            flex: 1;
+            display: flex; align-items: center; background-color: rgba(255,255,255,0.6);
+            padding: 15px; border-radius: 4px; text-align: left; flex: 1;
         }
-        .result-img { 
-            width: 100px; height: 100px; 
-            background-color: #fff; margin-right: 20px; 
-            border-radius: 2px; object-fit: contain; 
-            flex-shrink: 0; border: 1px solid #eee; 
-        }
-        .product-name { font-size: 1rem; font-weight: 500; color: #000; line-height: 1.5; }
-        .label { display: block; font-size: 0.75rem; color: var(--muji-red); font-weight: bold; margin-bottom: 6px; }
-        
-        .restart-btn { margin-top: 40px; background: none; border: none; text-decoration: underline; color: #999; cursor: pointer; font-size: 1rem; }
+        .result-img { width: 80px; height: 80px; background-color: #fff; margin-right: 15px; object-fit: contain; flex-shrink: 0; border: 1px solid #eee; }
+        .product-name { font-size: 0.95rem; font-weight: 500; color: #000; }
+        .label { display: block; font-size: 0.7rem; color: var(--muji-red); font-weight: bold; margin-bottom: 4px; }
 
-        /* ⭐ 電腦與 iPad 螢幕適配 (大於 768px) */
-        @media (min-width: 768px) {
+        /* --- ⭐ iPad 橫向模式特殊優化 --- */
+        @media (min-width: 768px) and (orientation: landscape) {
+            #quiz-container { max-width: 900px; padding: 10px; }
+            .intro-content { flex-direction: row; text-align: left; gap: 40px; }
+            .hero-img { max-width: 45%; max-height: 55vh; }
+            .options-container { grid-template-columns: 1fr 1fr; }
+            .result-card { flex-direction: row; }
+        }
+
+        @media (min-width: 1024px) {
             h1 { font-size: 1.8rem; }
-            .options-container {
-                grid-template-columns: 1fr 1fr; /* 變為雙欄 */
-            }
-            .result-card {
-                flex-direction: row; /* 結果並排 */
-            }
-            .hero-img {
-                max-height: 400px;
-            }
-            /* 讓開始按鈕在寬螢幕下不要太寬 */
-            .start-btn {
-                max-width: 300px;
-                margin: 0 auto;
-            }
         }
     </style>
 </head>
@@ -143,51 +136,50 @@
 
 <div id="quiz-container">
     <div id="step-0" class="step active">
-        <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img">
-        <h1>尋找您的專屬頭皮護理方式</h1>
-        <p class="description">
-            源自肌膚保養概念，特別添加<br>
-            <strong>米糠、薏仁、大麥</strong> 三大發酵液成分。<br>
-            賦予頭皮潤澤，深層修補受損。<br>
-            只需三步驟，發現您的完美養護對策。
-        </p>
-        <button class="option-btn start-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="startQuiz()">開始檢測</button>
+        <div class="intro-content">
+            <img src="https://img.91app.com/webapi/imagesV3/Original/SalePage/11567044/5/639087467223230000" class="hero-img">
+            <div class="text-section">
+                <h1>尋找您的專屬頭皮護理方式</h1>
+                <p class="description">
+                    特別添加 <strong>米糠、薏仁、大麥</strong> 發酵液成分。<br>
+                    賦予頭皮潤澤，深層修補受損。<br>
+                    只需三步驟，發現您的完美養護對策。
+                </p>
+                <button class="option-btn" style="text-align:center; background:var(--muji-gray); color:white;" onclick="startQuiz()">開始檢測</button>
+            </div>
+        </div>
     </div>
 
     <div id="step-1" class="step">
-        <span style="font-size: 0.85rem; color: #bbb;">STEP 01 / 03</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 01 / 03</span>
         <h1>基礎養護需求</h1>
-        <p class="description">透過發酵潤澤成分，幫助頭皮回歸健康狀態：</p>
         <div class="options-container">
             <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理洗髮精'); nextStep(2)"><strong>深層淨化清爽</strong>洗後帶走悶熱感，追求毛孔呼吸的暢快。</button>
-            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)"><strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，並鎖住髮絲水分。</button>
-            <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)"><strong>全方位機能平衡</strong>三大發酵精華完整導入，達成頭皮微生態平衡。</button>
+            <button class="option-btn" onclick="record(1, '植物發酵液頭皮護理潤絲精'); nextStep(2)"><strong>滋潤修護受損</strong>在洗髮同時呵護頭皮，鎖住髮絲水分。</button>
+            <button class="option-btn" onclick="record(1, '植物發酵液 洗 + 潤組合'); nextStep(2)"><strong>全方位平衡</strong>三大發酵精華導入，達成頭皮微生態平衡。</button>
         </div>
         <button class="back-btn" onclick="nextStep(0)">返回首頁</button>
     </div>
 
     <div id="step-2" class="step">
-        <span style="font-size: 0.85rem; color: #bbb;">STEP 02 / 03</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 02 / 03</span>
         <h1>生活環境觀察</h1>
-        <p class="description">針對台灣常見的日常場景，您更有感的是？</p>
         <div class="options-container">
-            <button class="option-btn" onclick="nextStep(3)"><strong>空調房與環境變化</strong>待在冷氣房久了，感覺頭皮乾燥緊繃或缺水。</button>
-            <button class="option-btn" onclick="nextStep(3)"><strong>悶熱與壓力</strong>長時間配戴安全帽，容易有氣味或出油悶熱感。</button>
+            <button class="option-btn" onclick="nextStep(3)"><strong>空調房與環境變化</strong>待在冷氣房久了，感覺頭皮乾燥緊繃。</button>
+            <button class="option-btn" onclick="nextStep(3)"><strong>悶熱與壓力</strong>長時間配戴安全帽，容易有氣味或出油感。</button>
             <button class="option-btn" onclick="nextStep(3)"><strong>頻繁造型修整</strong>受染燙吹風傷害，髮尾顯得乾澀或分岔。</button>
         </div>
         <button class="back-btn" onclick="nextStep(1)">返回上一題</button>
     </div>
 
     <div id="step-3" class="step">
-        <span style="font-size: 0.85rem; color: #bbb;">STEP 03 / 03</span>
+        <span style="font-size: 0.8rem; color: #bbb;">STEP 03 / 03</span>
         <h1>髮質特徵確認</h1>
-        <p class="description">請根據目前的秀髮狀態選擇最符合的描述：</p>
         <div class="options-container">
-            <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()"><strong>髮質乾燥、染燙後毛躁</strong>觸感乾澀缺乏光澤，希望能恢復柔順感。</button>
-            <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()"><strong>自然捲、毛躁粗硬髮質</strong>髮絲容易亂翹或難以整理，追求輕盈服貼度。</button>
-            <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()"><strong>受乾燥與靜電困擾的細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。</button>
-            <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()"><strong>容易扁塌、在意頭皮氣味</strong>頭皮油水不平衡，希望能維持清爽環境。</button>
-            <button class="option-btn" onclick="record(2, '深層修復髮膜'); showResult()"><strong>極度受損、髮尾嚴重打結</strong>經過頻繁化學處理，髮尾極度乾燥且易斷裂。</button>
+            <button class="option-btn" onclick="record(2, '護髮精華/潤澤保濕'); showResult()"><strong>髮質乾燥、染燙毛躁</strong>觸感乾澀缺乏光澤，恢復柔順感。</button>
+            <button class="option-btn" onclick="record(2, '免沖洗護髮乳/彈潤豐盈'); showResult()"><strong>自然捲、毛躁粗硬</strong>髮絲亂翹難整理，追求輕盈服貼度。</button>
+            <button class="option-btn" onclick="record(2, '護髮噴霧/清爽柔順'); showResult()"><strong>糾結細軟髮</strong>髮絲容易糾結打結，想要起床後快速順滑。</button>
+            <button class="option-btn" onclick="record(2, '頭皮護理噴霧'); showResult()"><strong>容易扁塌、在意氣味</strong>頭皮油水不平衡，維持清爽環境。</button>
         </div>
         <button class="back-btn" onclick="nextStep(2)">返回上一題</button>
     </div>
@@ -195,23 +187,10 @@
     <div id="step-result" class="step">
         <h1>您的專屬護理組合</h1>
         <div class="result-card">
-            <div class="result-item">
-                <img id="img-res-1" class="result-img" src="">
-                <div class="result-info">
-                    <span class="label">Step 1. 核心基礎保養</span>
-                    <span class="product-name" id="res-1"></span>
-                </div>
-            </div>
-            <div class="result-item">
-                <img id="img-res-2" class="result-img" src="">
-                <div class="result-info">
-                    <span class="label">Step 2. 機能進階對策</span>
-                    <span class="product-name" id="res-2"></span>
-                </div>
-            </div>
+            <div class="result-item"><img id="img-res-1" class="result-img" src=""><div class="result-info"><span class="label">Step 1. 核心基礎保養</span><span class="product-name" id="res-1"></span></div></div>
+            <div class="result-item"><img id="img-res-2" class="result-img" src=""><div class="result-info"><span class="label">Step 2. 機能進階對策</span><span class="product-name" id="res-2"></span></div></div>
         </div>
-        <p style="font-size: 0.9rem; color: #666; margin-top: 30px;">透過發酵產生的潤澤成分，為您的頭皮與頭髮補充水分並修補受損。</p>
-        <button class="restart-btn" onclick="resetQuiz()">重新檢測</button>
+        <button class="back-btn" style="margin-top: 30px; font-size: 1rem;" onclick="resetQuiz()">重新檢測</button>
     </div>
 </div>
 
@@ -226,10 +205,7 @@
         player = new YT.Player('yt-player', {
             height: '0', width: '0',
             videoId: '2Lr11mJWrsE',
-            playerVars: { 
-                'autoplay': 0, 'loop': 1, 'playlist': '2Lr11mJWrsE',
-                'controls': 0, 'showinfo': 0, 'modestbranding': 1
-            }
+            playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': '2Lr11mJWrsE', 'controls': 0 }
         });
     }
 
@@ -250,29 +226,21 @@
         '頭皮護理噴霧': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069581/0/638981331186530000?v=1',
         '免沖洗護髮乳/彈潤豐盈': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069579/0/639041876306400000?v=1',
         '護髮精華/潤澤保濕': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069578/0/638980194893430000?v=1',
-        '護髮噴霧/清爽柔順': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069580/0/638980194892830000?v=1',
-        '深層修復髮膜': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069582/0/639089203133070000?v=1'
+        '護髮噴霧/清爽柔順': 'https://img.91app.com/webapi/imagesV3/Original/SalePage/11069580/0/638980194892830000?v=1'
     };
 
     let selections = {};
-
     function nextStep(n) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         const target = document.getElementById('step-' + n);
-        if (target) {
-            target.classList.add('active');
-            window.scrollTo(0,0);
-        }
+        if (target) { target.classList.add('active'); window.scrollTo(0,0); }
     }
-
     function record(s, v) { selections[s] = v; }
-
     function showResult() {
         document.getElementById('res-1').innerText = selections[1] || "";
         document.getElementById('res-2').innerText = selections[2] || "";
         document.getElementById('img-res-1').src = itemImages[selections[1]] || "";
         document.getElementById('img-res-2').src = itemImages[selections[2]] || "";
-        
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         document.getElementById('step-result').classList.add('active');
     }
